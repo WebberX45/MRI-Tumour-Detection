@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File
+"""from fastapi import FastAPI, UploadFile, File
 import torch
 import numpy as np
 from PIL import Image
@@ -50,4 +50,4 @@ async def predict(file: UploadFile = File(...)):
         "prediction": prediction
     })
 
-    return {"prediction": int(prediction)}
+    return {"prediction": int(prediction)}"""
