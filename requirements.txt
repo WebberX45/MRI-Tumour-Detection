@@ -7,3 +7,7 @@ pandas
 evidently
 python-multipart
 gunicorn
+flask
+tensorflow
+keras
+opencv-python-headless
