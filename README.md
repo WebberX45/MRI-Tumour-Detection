@@ -59,32 +59,6 @@ Unlike a basic ML project, this system has been extended into a **production-rea
 - `retrain.py` → retraining pipeline (extendable)
 - Designed for automation using cron / workflows
 
----
-
-# 🗂️ Project Structure
-
-MRI-Tumour-Detection/
-│
-├── main.py # Flask web app
-├── utils.py # Helper functions
-├── monitor.py # Monitoring script
-├── retrain.py # Retraining pipeline (placeholder)
-├── requirements.txt
-├── Dockerfile
-│
-├── Model/
-│ └── model.h5 # Trained DL model
-│
-├── templates/
-│ └── index.html # Frontend UI
-│
-├── static/
-│ └── style.css # Styling
-│
-├── uploads/ # Uploaded images + heatmaps
-├── logs/ # Logs
-├── data/ # Monitoring data
-
 
 ---
 
