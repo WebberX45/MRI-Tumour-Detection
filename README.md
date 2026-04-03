@@ -64,12 +64,13 @@ Unlike a basic ML project, this system has been extended into a **production-rea
 # 🗂️ Project Structure
 
 MRI-Tumour-Detection/
-│── main.py # Flask web app
-│── utils.py # Helper functions
-│── monitor.py # Monitoring script
-│── retrain.py # Retraining pipeline (placeholder)
-│── requirements.txt
-│── Dockerfile
+│
+├── main.py # Flask web app
+├── utils.py # Helper functions
+├── monitor.py # Monitoring script
+├── retrain.py # Retraining pipeline (placeholder)
+├── requirements.txt
+├── Dockerfile
 │
 ├── Model/
 │ └── model.h5 # Trained DL model
