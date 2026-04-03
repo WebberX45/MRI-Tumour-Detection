@@ -8,8 +8,7 @@ import os
 
 app = Flask(__name__)
 
-model = load_model('Model/model.h5')
-model.build((None, 256, 256, 3))
+model = load_model('Model/model.h5', compile=False, safe_mode=False)
 
 
 class_labels = ['pituitary', 'glioma', 'notumor', 'meningioma']
@@ -33,9 +32,9 @@ def predict_tumor(image_path):
     predicted_class_index = np.argmax(predictions, axis=1)[0]
 
     if class_labels[predicted_class_index] == 'notumor':
-        return "No Tumor"
+        return "No Tumor", False
     else:
-        return f"Tumor: {class_labels[predicted_class_index]}"
+        return f"Tumor: {class_labels[predicted_class_index]}", True
 
 
 
@@ -109,10 +108,13 @@ def index():
             file_location = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
             file.save(file_location)
 
-            result = predict_tumor(file_location)
+            result, has_tumor = predict_tumor(file_location)
+
+            heatmap_path = None
 
             try:
-                heatmap_path = generate_gradcam(file_location, model)
+                if has_tumor:
+                    heatmap_path = generate_gradcam(file_location, model)
             except Exception as e:
                 print("GradCAM error:", e)
                 heatmap_path = None

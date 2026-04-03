@@ -13,18 +13,30 @@
 <body class="bg-dark">
     <div class = "container">
         <div class="heading_main">
-            <h1 class="display" align="center" ><span style="color: white;">MRI Tumor Detecting System</span></h1>
-            <p class = "main_heading_para" align="center"><span style="color: white;">Kindly upload the MRI Scan to check whether there is Brain Tumor or not...</span></p>
+            <h1 class="display text-center text-white fw-bold">
+                MRI Tumor Detection AI
+            </h1>
+            <p class="text-center text-light">
+                Upload an MRI scan and let AI analyze it instantly
+            </p>
         </div>
 
         <!-- File Upload Form -->
         <div class="card shadow p-4 mt-4">
-            <form method="POST" enctype="multipart/form-data">
+            <form method="POST" enctype="multipart/form-data" id="uploadForm">
+
                 <div class="mb-3">
                     <label for="file" class="form-label">Select MRI Image:</label>
                     <input type="file" class="form-control" id="file" name="file" accept="image/*" required>
                 </div>
+
                 <button type="submit" class="btn btn-primary">Upload and Detect</button>
+
+                <!-- ✅ Loading Animation -->
+                <div id="loading" style="display:none; text-align:center; margin-top:15px;">
+                    <div class="spinner-border text-light" role="status"></div>
+                    <p class="text-light mt-2">Analyzing MRI...</p>
+                </div>
             </form>
         </div>
 
@@ -33,27 +45,51 @@
         <div id="results" class="mt-4">
             <div class="card shadow">
                 <div class="card-body">
-                    <h4 class="card-title {% if 'No Tumor' in result %}text-success{% else %}text-danger{% endif %}">
+                    <h2 class="{% if 'No Tumor' in result %}text-success{% else %}text-danger{% endif %} fw-bold text-center">
                         {{ result }}
-                    </h4>
-                    <div class="row mt-4">
+                    </h2>
+                    <div class="row mt-4 text-center">
+
+                        <!-- ✅ If NO heatmap → center image -->
+                        {% if not heatmap_path %}
+                        <div class="col-md-12 d-flex justify-content-center">
+                            <div>
+                                <h5 class="text-info">Original MRI</h5>
+                                <img src="{{ file_path }}" class="img-fluid shadow-lg">
+                            </div>
+                        </div>
+                        {% else %}
+
+                        <!-- ✅ If heatmap exists → side-by-side -->
                         <div class="col-md-6">
-                            <h5 class="text-white">MRI Scan</h5>
-                            <img src="{{ file_path }}" class="img-fluid">
+                            <h5 class="text-info">Original MRI</h5>
+                            <img src="{{ file_path }}" class="img-fluid shadow-lg">
                         </div>
 
-                        {% if heatmap_path %}
                         <div class="col-md-6">
-                            <h5 class="text-white">Tumor Heatmap</h5>
-                            <img src="{{ heatmap_path }}" class="img-fluid">
+                            <h5 class="text-warning">AI Heatmap</h5>
+                            <img src="{{ heatmap_path }}" class="img-fluid shadow-lg">
                         </div>
+
                         {% endif %}
+
                     </div>
                 </div>
             </div>
         </div>
         {% endif %}
     </div>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const form = document.getElementById("uploadForm");
+        const loading = document.getElementById("loading");
+
+        form.addEventListener("submit", function() {
+            loading.style.display = "block";
+        });
+    });
+    </script>
+
 </body>
 
 </html>
